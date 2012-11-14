@@ -32,7 +32,6 @@
 		function rasgele(ilk:int,son:int)
 		{
 			var sonuc:Number = Math.random() * son + ilk;
-			//var sonuc:Number = Math.random() * ((son - ilk) + 1) + ilk;
 			return Math.round(sonuc);
 		}
 		/**
@@ -63,7 +62,7 @@
 					return this.islem;
 					break;
 				case 4 :
-					arr = ['+','+','-','*','+','-','*','+','/','-'];
+					arr = ['+','/','-','*','+','-','*','+','/','-'];
 					this.islem = arr[this.rasgele(0,9)];
 					return this.islem;
 					break;
@@ -111,7 +110,7 @@
 					this.cevap = r1 / r2;
 					break;
 			}
-			this.soru = r1 + ' ' + this.islem + ' ' + ' ' + r2;
+			this.soru = r1 + ' ' + this.islem + ' ' + r2;
 		}
 
 
