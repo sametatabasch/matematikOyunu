@@ -12,8 +12,9 @@ function basla(e:MouseEvent)
 	var oyuncu1:oyuncu = new oyuncu();
 	addChild(oyuncu1.balon);
 	oyuncu1.balonEkle(470,155);
-	var z;
-	z = setInterval(sisir,1000);
+	oyuncu1.balonSisir();
+	//var z;
+	//z = setInterval(sisir,1000);
 	function sisir(){oyuncu1.balonSisir();}
 	var oyuncu2:oyuncu = new oyuncu();
 	addChild(oyuncu2.balon);
@@ -24,7 +25,7 @@ function basla(e:MouseEvent)
 	var z2;
 	z2 = setInterval(sisir2,1000);
 	function sisir2(){oyuncu2.balonSisir();if(oyuncu1.balon.height==60){oyuncu1.balonPatlat();trace("balonpatladı");}}
-	
+	//-----------------
 	/*balon şişir ve patlat
 	var z;
 	z = setInterval(sisir,1000);
