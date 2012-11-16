@@ -2,6 +2,60 @@
 import flash.geom.ColorTransform;
 
 baslaButon.addEventListener(MouseEvent.CLICK,basla);
+oyuncuSayisiBelirle.addEventListener(Event.CHANGE,balonYerlestir);
+var oyuncuSayisi:int;
+// global olması için fonksiyon dışında oyuncuları  tanımlıyorum
+var oyuncu1:oyuncu = new oyuncu();
+var oyuncu2:oyuncu = new oyuncu();
+var oyuncu3:oyuncu = new oyuncu();
+var oyuncu4:oyuncu = new oyuncu();
+function balonYerlestir(e:Event)
+{
+	oyuncuSayisi = oyuncuSayisiBelirle.value;
+	/*
+	bu  kısımda önceden eklenmiş  balonlar varsa onları  silip  yeni  balonlar için yer ayarlamak  gerekiyor
+	asıl  sorun  4 balondan 3 balona düşünce 4.  balonu  silmek 
+	*/
+	switch (oyuncuSayisi)
+	{
+		case 1 :
+			addChild(oyuncu1.balon);
+			oyuncu1.balonEkle(735,68.70);
+
+			break;
+		case 2 :
+			addChild(oyuncu1.balon);
+			oyuncu1.balonEkle(735,68.70);
+
+			addChild(oyuncu2.balon);
+			oyuncu2.balonEkle(735,220.35);
+			break;
+		case 3 :
+			addChild(oyuncu1.balon);
+			oyuncu1.balonEkle(735,68.70);
+
+			addChild(oyuncu2.balon);
+			oyuncu2.balonEkle(735,220.35);
+
+			addChild(oyuncu3.balon);
+			oyuncu3.balonEkle(735,372);
+			break;
+		case 4 :
+			addChild(oyuncu1.balon);
+			oyuncu1.balonEkle(735,68.70);
+
+			addChild(oyuncu2.balon);
+			oyuncu2.balonEkle(735,220.35);
+
+			addChild(oyuncu3.balon);
+			oyuncu3.balonEkle(735,372);
+
+			addChild(oyuncu4.balon);
+			oyuncu4.balonEkle(735,523.65);
+			break;
+	}
+}
+
 function basla(e:MouseEvent)
 {
 	var islm:sor = new sor(seviyeBelirle.value);
@@ -9,47 +63,17 @@ function basla(e:MouseEvent)
 	soru.text = islm.soru;
 	trace(islm.cevap);
 	//------------------------
-	var oyuncu1:oyuncu = new oyuncu();
-	addChild(oyuncu1.balon);
-	oyuncu1.balonEkle(470,155);
-	oyuncu1.balonSisir();
-	//var z;
-	//z = setInterval(sisir,1000);
-	function sisir(){oyuncu1.balonSisir();}
-	var oyuncu2:oyuncu = new oyuncu();
-	addChild(oyuncu2.balon);
-	oyuncu2.balonEkle(70,155);
-	var renk:ColorTransform;
-	renk.color=0xff0000;
-	balon.transform.colorTransform = renk;
-	var z2;
-	z2 = setInterval(sisir2,1000);
-	function sisir2(){oyuncu2.balonSisir();if(oyuncu1.balon.height==60){oyuncu1.balonPatlat();trace("balonpatladı");}}
-	//-----------------
-	/*balon şişir ve patlat
-	var z;
-	z = setInterval(sisir,1000);
-	function sisir()
-	{
-		balon.height +=  2;
-		balon.width +=  2;
-		var girilenSonuc:int;
-		girilenSonuc = int(sonucTextBox.text);
-		if (balon.width >= 100)
-		{
-			balon.gotoAndPlay(3);
-			clearInterval(z);
-		}
-		/*if (sonuc==girilenSonuc)
-		{
-		clearInterval(z);
-		}
-		else if (sonuc!=girilenSonuc && girilenSonuc.toString!= null)
-		{//bu kısım hatalı 
-		balon.height +=  5;
-		balon.width +=  5;
-		}
-	}*/
 
+	var z = setInterval(oyuncu1.balonSisir,1000);//oyuncu birin balonunu şişir
+	
+
+	var z2 = setInterval(oyuncu2.balonSisir,1000);
+
+
+	var z3 = setInterval(oyuncu3.balonSisir,1000);
+
+
+	var z4 = setInterval(oyuncu4.balonSisir,1000);
+	//-----------------
 
 }

@@ -25,7 +25,7 @@
 		 */
 		public function balonEkle(balonX,balonY)
 		{
-			addChild(this.balon);
+			//addChild(this.balon);
 			this.balon.x = balonX;
 			this.balon.y = balonY;
 			//------------------------------
@@ -38,26 +38,22 @@
 		 */
 		public function balonSisir()
 		{
-			var z;
-			z=setInterval(this.sisir(),1000);
-		}
-		/**
-		 * sisir
-		 *
-		 */
-		 private function sisir(){
-			 this.balon.height +=  2;
+			this.balon.height +=  2;
 			this.balon.width +=  2;
-
-		 }
+			if (this.balon.width >= 100)
+			{
+				this.balonPatlat();
+			}
+		}
 		/**
 		 * balon patlatma fonksiyonu
 		 *
 		 *
 		 */
-		 public function balonPatlat(){
-			 this.balon.gotoAndPlay(3);
-		 }
+		public function balonPatlat()
+		{
+			this.balon.gotoAndPlay(3);
+		}
 	}
 
 }
