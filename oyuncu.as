@@ -12,22 +12,26 @@
 		 *  var Array
 		 */
 		public var adi:String;
-		public var balon:ballon = new ballon();
+		public var puan:int = 0;
+		public var balon:ballon = new ballon  ;
 		public function oyuncu()
 		{
 			// constructor code
 		}
 		/**
 		 * Balon ekleme fonksiyonu 
-		 *
-		 *
+		 * balonun konumunu ve ilk boyutlarını belirler
+		 * @param balonX :int
+		 * @param balonY :int
 		 *
 		 */
-		public function balonEkle(balonX,balonY)
+		public function balonEkle(balonX:int,balonY:int)
 		{
 			//addChild(this.balon);
 			this.balon.x = balonX;
 			this.balon.y = balonY;
+			this.balon.height = 50;
+			this.balon.width = 35;
 			//------------------------------
 		}
 		/**
