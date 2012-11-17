@@ -1,15 +1,19 @@
 ﻿import flash.events.MouseEvent;
 import flash.geom.ColorTransform;
-
-baslaButon.addEventListener(MouseEvent.CLICK,basla);
-var oyuncuSayisi:int = 0;
+import flash.geom.Transform;
+import fl.controls.ColorPicker;
+import fl.events.ColorPickerEvent;
 // global olması için fonksiyon dışında oyuncuları  tanımlıyorum
+var oyuncuSayisi:int = 0;
 var oyuncu1:oyuncu = new oyuncu  ;
 var oyuncu2:oyuncu = new oyuncu  ;
 var oyuncu3:oyuncu = new oyuncu  ;
 var oyuncu4:oyuncu = new oyuncu  ;
-
-function basla(e:MouseEvent)
+var pencere:bilgiler = new bilgiler();//bilgiler penceresi 
+var isaretci:pompa = new pompa();//pompa
+baslaButon.visible = false;//ilk olarak başlat butonu gözükmüyor
+tamamButon.addEventListener(MouseEvent.CLICK,tamam);
+function tamam(e:MouseEvent)
 {
 	//balon yerleştirme
 	switch (oyuncuSayisi)
@@ -74,15 +78,38 @@ function basla(e:MouseEvent)
 			oyuncu4.balonEkle(735,523.65);
 			break;
 	}
-	
-	/*
-	 oyuncu  isimlerini  al  
-	 ve sıranın kimde olduğunu  belirt balonun yanına pompa animasyonu  getirilerek gösterilebilir
-	 balon renklerini  değiştir
-	 
-	*/
-
 	//balon yerleştirme son 
+	addChild(pencere);//bilgiler penceresini ekle
+	pencere.x = 350;// bilgiler penceresini konumlandır
+	pencere.y = 200;
+	pencere.goster(oyuncuSayisi);
+	// bilgiler penceresi elemanlarını göstermek için ;
+	baslaButon.visible = true;
+	tamamButon.visible = false;
+}
+baslaButon.addEventListener(MouseEvent.CLICK,basla);
+
+
+function basla(e:MouseEvent)
+{
+	oyuncu1.adi = pencere.inputBox1.text;//bilgiler penceresinden bilgiler alınarak ilgili  yare atanıyor
+	oyuncu2.adi = pencere.inputBox2.text;
+	oyuncu3.adi = pencere.inputBox3.text;
+	oyuncu4.adi = pencere.inputBox4.text;
+
+	var colorInfo:ColorTransform= new ColorTransform();;
+	colorInfo.color = uint('0x'+pencere.renkSec1.hexValue);
+	oyuncu1.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+pencere.renkSec2.hexValue);
+	oyuncu2.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+pencere.renkSec3.hexValue);
+	oyuncu3.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+pencere.renkSec4.hexValue);
+	oyuncu4.balon.transform.colorTransform = colorInfo;
+
+	removeChild(pencere);
+	baslaButon.visible = false;
+	sonucTextBox.restrict = "^a-zA-Z";//sonuç olarak sadece sayı  ve işaretler yazılması  için 
 	var islm:sor = new sor(seviyeBelirle.value);
 	islm.soruUret();
 	soru.text = islm.soru;
@@ -116,6 +143,9 @@ function basla(e:MouseEvent)
 	}
 
 	var z = setInterval(oyuncu1.balonSisir,1000);//oyuncu birin balonunu şişir
+	addChild(isaretci);
+	isaretci.x = 615;
+	isaretci.y = 68.70;
 	sonucTextBox.addEventListener(KeyboardEvent.KEY_DOWN,denetle);
 	function denetle(e:KeyboardEvent)
 	{// CEVABI  GİRİP  ENTER A BASTIĞINDA 
@@ -130,25 +160,43 @@ function basla(e:MouseEvent)
 				{
 					aktifOyuncuNumarasi = 1;
 				}
+				// balonun patlayıp  patlamadığına bakan fonksiyon
+				while (aktifOyuncu(aktifOyuncuNumarasi).patladi)
+				{
+					aktifOyuncuNumarasi++;
+					if ((aktifOyuncuNumarasi > oyuncuSayisi))
+					{
+						aktifOyuncuNumarasi = 1;
+					}
+				}
+				//isaretçiyi  yerlestir
+				switch (aktifOyuncuNumarasi)
+				{
+					case 1 :
+						isaretci.y = 68.70;
+						break;
+					case 2 :
+						isaretci.y = 220.35;
+						break;
+					case 3 :
+						isaretci.y = 372;
+						break;
+					case 4 :
+						isaretci.y = 523.65;
+						break;
+				}
 				z = setInterval(aktifOyuncu(aktifOyuncuNumarasi).balonSisir,1000);
 				islm.soruUret();
 				soru.text = islm.soru;
-				sonucTextBox.text="";
+				sonucTextBox.text = "";
 			}
 			else
 			{
-				trace("Yanlış");
-				/*
-				balonu ekstra şişir
-				puan düşür 5 puan
-				*/
-				
+				sonucTextBox.text = "";
+				aktifOyuncu(aktifOyuncuNumarasi).puan -=  5;
+				aktifOyuncu(aktifOyuncuNumarasi).balon.height +=  5;
+				aktifOyuncu(aktifOyuncuNumarasi).balon.width +=  5;
 			}
 		}
-
 	}
-
-
-	//-----------------
-
 }

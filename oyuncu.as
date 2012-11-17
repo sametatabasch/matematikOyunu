@@ -14,6 +14,7 @@
 		public var adi:String;
 		public var puan:int = 0;
 		public var balon:ballon = new ballon  ;
+		public var patladi:Boolean;
 		public function oyuncu()
 		{
 			// constructor code
@@ -32,6 +33,7 @@
 			this.balon.y = balonY;
 			this.balon.height = 50;
 			this.balon.width = 35;
+			this.patladi=false;
 			//------------------------------
 		}
 		/**
@@ -57,6 +59,8 @@
 		public function balonPatlat()
 		{
 			this.balon.gotoAndPlay(3);
+			this.patladi=true;
+			
 		}
 	}
 
