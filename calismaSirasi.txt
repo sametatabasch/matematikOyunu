@@ -1,0 +1,44 @@
+1-gerekli  kütüphaneler çaðrýlýyor
+2-oyun genelinde kullanýlan deðiþkenler tanýmlanýyor
+3-baþlat butonu gizleniyor
+4-tamam butonuna týklama dinleyicisi ekleniyor
+5-tamam butonu týklandýðýnda
+	1-oyuncu sayýsýna göre sahnede bulunan balonlar kaldýrýlýyor
+	2-oyuncu sayýsý OyuncuSayisiBelirleden  alýnýyor
+	3-oyuncu  sayýsýna göre balonlar yerleþtiriliyor.
+	4-oyuncularýn bilgilerinin alýnacaðý  pencere eklenyor ve komumlandýrýlýyor
+	5-eklenen penceredeki  elemanlarýn görünürlüðünü denetleyen fonksiyon çaðýrýlýyor
+	6-baþlat butonu  görünür yapýlýp  tamam butonu gizleniyor
+6-baþlat butonuna týklama dinleyicisi  ekleniyor
+7-baþlat butonuna týklandýðýnda
+	1-bilgiler penceresinden alýnan renk ve isim bilgileri oyunculara aktarýlýyor
+	2-bilgiler penceresi kaldýrýlýyor
+	3-baþlat butonu gizleniyor
+	4-sonucTextBox ýn girilen verilerinin sadece iþaret ve ve rakam olmasý denetleniyor
+	5-islm deðiþkeni ile soru sýnýfý çaðýrýlýyor ve soru üretiliyor
+	6-soru  ekrana yazýlýyor
+	7-aktif oyuncu numarasý 1 olarak  tanýmlanýyor
+	8-aktif oyuncuyu belirleyen fonsiyon tanýmlanýyor
+	9-birinci balon þiþirilmeye baþlýyor
+	10-iþaretci eklenip  konumu  belirleniyor
+	11-sonucTextBox a klavye giriþi  dinleyicisi ekleniyor
+	12-sonucTexbox a sayý girildiðinde
+		1-denetle fonksiyonu sayý girince çalýþýyor
+		2-eðer enter a basýlýrsa cevabýn doðruluðu kontrol ediliyor
+		3-doðru ise 
+			1-balonun þiþmesi  durduruluyor
+			2-aktif oyuncuya 10 puan ekleniyor
+			3-aktif oyuncu numarasý  1  arttýrýlýyor
+			4-aktif oyuncu  numarasýnýn oyuncu sayýsýný  geçmesi durumunda numara 1 oluyor
+			5-patlayan balon sayýsýnýn takibi için i  deðiþkeni  tanýmlanýyor ve ilk deðer 0 olarak  tanýmlanýyor
+			6-döngü ile  akitf kullanýcýnýn balonunun  patlayýp  patlamadýðý  kontrol  ediliyor 
+			7-balon patlamýþ ise  aktif oyuncu  numarasý  bir arttýrýlýp  max durumu  denetleniyor ve i deðeri bir  arttýrýlýyor
+			8-i oyuncu  sayýsýndan bir eksiðe ulaþýrsa oyun bitiriliyor
+			9-aktif oyuncu numarasýna göre iþaretci yerleþtiriliyor
+			10-aktif oyuncunun balonu þiþirilmeye baþlanýyor
+			11-yeni soru üretilip ekrana yazýlýyor
+			12-sonucTextBox temizleniyor
+		4-eðer cevap  yanlýþsa
+			1-sonucTextBox temizleniyor
+			2-aktif oyuncudan 5 puan siliniyor
+			3-balona ekstra hava veriliyor
