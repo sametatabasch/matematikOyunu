@@ -45,7 +45,6 @@
 			var arr:Array;
 			switch (this.seviye)
 			{
-
 				case 1 :
 					arr = ['+','+','-','+','+','-','+','+','-','-'];
 					this.islem = arr[this.rasgele(0,9)];
@@ -74,6 +73,32 @@
 			}
 		}
 		/**
+		 * sayiUret fonksiyonu
+		 * 
+		 * @return int
+		 */
+		private function sayiUret():int
+		{
+			switch (this.seviye)
+			{
+				case 1 :
+					return this.rasgele(0,10);
+					break;
+				case 2 :
+					return this.rasgele(0,20);
+					break;
+				case 3 :
+					return this.rasgele(0,30);
+					break;
+				case 4 :
+					return this.rasgele(0,40);
+					break;
+				default :
+					return this.rasgele(0,10);
+					break;
+			}
+		}
+		/**
 		 * soruUret fonksiyonu 
 		 * seviyeve uygun işlem üreten fonksiyon
 		 *
@@ -82,8 +107,8 @@
 		public function soruUret()
 		{
 			var r1,r2,sonuc:Number;
-			r1 = this.rasgele(0,10);
-			r2 = this.rasgele(0,10);
+			r1 = this.sayiUret();
+			r2 = this.sayiUret();
 			this.islemBelirle();
 			switch (this.islem)
 			{

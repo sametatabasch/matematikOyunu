@@ -146,6 +146,72 @@ function basla(e:MouseEvent)
 	addChild(isaretci);
 	isaretci.x = 615;
 	isaretci.y = 68.70;
+	/**
+	 * isaretciYerlestir fonksiyonu 
+	 * aktif oyuncu numarasına göre işaretcinin konumunu belirleyen fonksiyon
+	 * @param aktifOyuncuNumarasi:int
+	 */
+	function isaretciYerlestir(aktifOyuncuNumarasi:int)
+	{
+		switch (aktifOyuncuNumarasi)
+		{
+			case 1 :
+				isaretci.y = 68.70;
+				break;
+			case 2 :
+				isaretci.y = 220.35;
+				break;
+			case 3 :
+				isaretci.y = 372;
+				break;
+			case 4 :
+				isaretci.y = 523.65;
+				break;
+		}
+	}
+	/**
+	 * balonPatladimi
+	 * aktif oyuncunun balonunun patlayıp patlamadığına bakan fonksiyon 
+	 * @param no:int
+	 */
+	function balonPatladimi(no:int)
+	{
+		var i:int = 0;
+		trace("fonksiyon çalıştı aktif no="+no);
+		while (aktifOyuncu(no).patladi)
+		{
+			aktifOyuncuNumarasi++;
+			if ((aktifOyuncuNumarasi > oyuncuSayisi))
+			{
+				aktifOyuncuNumarasi = 1;
+			}
+			no = aktifOyuncuNumarasi;
+			i++;
+			if (i==(oyuncuSayisi-1))
+			{
+				trace("oyun bitti"+"\n oyuncu1 ="+oyuncu1.puan+"\n oyuncu2 ="+oyuncu2.puan);
+				break;
+			}
+		}
+	}
+	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm baş
+	var patlamaDenetleZ = setInterval(patlamaDenetleF,500);
+	function patlamaDenetleF()
+	{
+		var aktif = aktifOyuncuNumarasi;
+		// balonun patlayıp  patlamadığına bak
+		balonPatladimi(aktifOyuncuNumarasi);
+		if (aktif!=aktifOyuncuNumarasi)
+		{
+			//isaretçiyi  yerlestir
+			isaretciYerlestir(aktifOyuncuNumarasi);
+			z = setInterval(aktifOyuncu(aktifOyuncuNumarasi).balonSisir,1000);
+			islm.soruUret();
+			soru.text = islm.soru;
+			sonucTextBox.text = "";
+		}
+	}
+	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm son
 	sonucTextBox.addEventListener(KeyboardEvent.KEY_DOWN,denetle);
 	function denetle(e:KeyboardEvent)
 	{// CEVABI  GİRİP  ENTER A BASTIĞINDA 
@@ -160,31 +226,10 @@ function basla(e:MouseEvent)
 				{
 					aktifOyuncuNumarasi = 1;
 				}
-				// balonun patlayıp  patlamadığına bakan fonksiyon
-				while (aktifOyuncu(aktifOyuncuNumarasi).patladi)
-				{
-					aktifOyuncuNumarasi++;
-					if ((aktifOyuncuNumarasi > oyuncuSayisi))
-					{
-						aktifOyuncuNumarasi = 1;
-					}
-				}
+				// balonun patlayıp  patlamadığına bak
+				balonPatladimi(aktifOyuncuNumarasi);
 				//isaretçiyi  yerlestir
-				switch (aktifOyuncuNumarasi)
-				{
-					case 1 :
-						isaretci.y = 68.70;
-						break;
-					case 2 :
-						isaretci.y = 220.35;
-						break;
-					case 3 :
-						isaretci.y = 372;
-						break;
-					case 4 :
-						isaretci.y = 523.65;
-						break;
-				}
+				isaretciYerlestir(aktifOyuncuNumarasi);
 				z = setInterval(aktifOyuncu(aktifOyuncuNumarasi).balonSisir,1000);
 				islm.soruUret();
 				soru.text = islm.soru;
