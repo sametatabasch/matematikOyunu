@@ -209,10 +209,12 @@ function basla(e:MouseEvent)
 				var sonuclar:Array =new Array();
 				var ksonuclar:Array= new Array();
 				var i:int;
-				for (i=1;i<=oyuncuSayisi;i++){
+				for (i=1; i<=oyuncuSayisi; i++)
+				{
 					sonuclar.push(aktifOyuncu(i).puan);
 				}
-				for (i=1;i<=oyuncuSayisi;i++){
+				for (i=1; i<=oyuncuSayisi; i++)
+				{
 					ksonuclar.push(aktifOyuncu(i).puan);
 				}
 				ksonuclar.sort(Array.NUMERIC);
@@ -221,40 +223,46 @@ function basla(e:MouseEvent)
 				switch (oyuncuSayisi)
 				{
 					case 2 :
-						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
-						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
-						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
-						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).puan.toString();
 						puan3.visible = false;
 						skor3a.visible = false;
 						skor4a.visible = false;
 						puan4.visible = false;
 						break;
 					case 3 :
-						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
-						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
-						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).adi;
-						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
-						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
-						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).puan.toString();
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).adi;
+						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2]) + 1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).puan.toString();
+						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2]) + 1).puan.toString();
 						skor4a.visible = false;
 						puan4.visible = false;
 						break;
 					case 4 :
-						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
-						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
-						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).adi;
-						skor4a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3])+1).adi;
-						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
-						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
-						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).puan.toString();
-						puan4.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3])+1).puan.toString();
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).adi;
+						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2]) + 1).adi;
+						skor4a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3]) + 1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0]) + 1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1]) + 1).puan.toString();
+						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2]) + 1).puan.toString();
+						puan4.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3]) + 1).puan.toString();
 						break;
+				}
+				yenidenOyna.addEventListener(MouseEvent.CLICK,function(){gotoAndStop(1);});
+				function yenidenOynaClick(e:MouseEvent)
+				{
+					
 				}
 				break;
 			}
 		}
 	}
+
 	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm baş
 	var patlamaDenetleZ = setInterval(patlamaDenetleF,500);
 	function patlamaDenetleF()
