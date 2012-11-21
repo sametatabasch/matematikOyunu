@@ -51,12 +51,12 @@
 					return this.islem;
 					break;
 				case 2 :
-					arr = ['+','+','-','*','+','-','*','+','-','-'];
+					arr = ['+','+','-','+','+','-','+','+','-','-'];
 					this.islem = arr[this.rasgele(0,9)];
 					return this.islem;
 					break;
 				case 3 :
-					arr = ['+','+','-','*','+','-','*','+','*','-'];
+					arr = ['+','/','-','*','+','-','*','+','/','-'];
 					this.islem = arr[this.rasgele(0,9)];
 					return this.islem;
 					break;
@@ -88,10 +88,10 @@
 					return this.rasgele(0,20);
 					break;
 				case 3 :
-					return this.rasgele(0,30);
+					return this.rasgele(0,10);
 					break;
 				case 4 :
-					return this.rasgele(0,40);
+					return this.rasgele(0,20);
 					break;
 				default :
 					return this.rasgele(0,10);

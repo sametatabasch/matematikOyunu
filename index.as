@@ -3,50 +3,71 @@ import flash.geom.ColorTransform;
 import flash.geom.Transform;
 import fl.controls.ColorPicker;
 import fl.events.ColorPickerEvent;
+
+import flash.text.TextField;
 // global olması için fonksiyon dışında oyuncuları  tanımlıyorum
 var oyuncuSayisi:int = 0;
+var seviye:int = 0;
 var oyuncu1:oyuncu = new oyuncu  ;
 var oyuncu2:oyuncu = new oyuncu  ;
 var oyuncu3:oyuncu = new oyuncu  ;
 var oyuncu4:oyuncu = new oyuncu  ;
-var pencere:bilgiler = new bilgiler();//bilgiler penceresi 
 var isaretci:pompa = new pompa();//pompa
-baslaButon.visible = false;//ilk olarak başlat butonu gözükmüyor
-tamamButon.addEventListener(MouseEvent.CLICK,tamam);
-function tamam(e:MouseEvent)
+var patlayanlar:Array=new Array();;
+ileriButon.addEventListener(MouseEvent.CLICK,ileri);
+function ileri(e:MouseEvent)
 {
-	//balon yerleştirme
+	seviye = seviyeBelirle.value;
+	oyuncuSayisi = oyuncuSayisiBelirle.value;
+	gotoAndStop(2);
 	switch (oyuncuSayisi)
 	{
-		case 1 :
-			removeChild(oyuncu1.balon);
-			break;
 		case 2 :
-			removeChild(oyuncu1.balon);
-			removeChild(oyuncu2.balon);
+			label3.visible = false;
+			renkLabel3.visible = false;
+			renkSec3.visible = false;
+			isimLabel3.visible = false;
+			inputBox3.visible = false;
+			label4.visible = false;
+			renkLabel4.visible = false;
+			renkSec4.visible = false;
+			isimLabel4.visible = false;
+			inputBox4.visible = false;
 			break;
 		case 3 :
-			removeChild(oyuncu1.balon);
-			removeChild(oyuncu2.balon);
-			removeChild(oyuncu3.balon);
-			break;
-		case 4 :
-			removeChild(oyuncu1.balon);
-			removeChild(oyuncu2.balon);
-			removeChild(oyuncu3.balon);
-			removeChild(oyuncu4.balon);
+			label4.visible = false;
+			renkLabel4.visible = false;
+			renkSec4.visible = false;
+			isimLabel4.visible = false;
+			inputBox4.visible = false;
 			break;
 		default :
 			break;
 	}
-	oyuncuSayisi = oyuncuSayisiBelirle.value;
+	baslaButon.addEventListener(MouseEvent.CLICK,basla);
+}
+
+function basla(e:MouseEvent)
+{
+	oyuncu1.adi = inputBox1.text;//bilgiler alınarak ilgili  yare atanıyor
+	oyuncu2.adi = inputBox2.text;
+	oyuncu3.adi = inputBox3.text;
+	oyuncu4.adi = inputBox4.text;
+
+	var colorInfo:ColorTransform= new ColorTransform();;
+	colorInfo.color = uint('0x'+renkSec1.hexValue);
+	oyuncu1.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+renkSec2.hexValue);
+	oyuncu2.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+renkSec3.hexValue);
+	oyuncu3.balon.transform.colorTransform = colorInfo;
+	colorInfo.color = uint('0x'+renkSec4.hexValue);
+	oyuncu4.balon.transform.colorTransform = colorInfo;
+	gotoAndStop(3);
+	sonucTextBox.restrict = "^a-zA-Z";//sonuç olarak sadece sayı  ve işaretler yazılması  için 
+	//balon yerleştirme
 	switch (oyuncuSayisi)
 	{
-		case 1 :
-			addChild(oyuncu1.balon);
-			oyuncu1.balonEkle(735,68.70);
-
-			break;
 		case 2 :
 			addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
@@ -79,41 +100,10 @@ function tamam(e:MouseEvent)
 			break;
 	}
 	//balon yerleştirme son 
-	addChild(pencere);//bilgiler penceresini ekle
-	pencere.x = 350;// bilgiler penceresini konumlandır
-	pencere.y = 200;
-	pencere.goster(oyuncuSayisi);
-	// bilgiler penceresi elemanlarını göstermek için ;
-	baslaButon.visible = true;
-	tamamButon.visible = false;
-}
-baslaButon.addEventListener(MouseEvent.CLICK,basla);
-
-
-function basla(e:MouseEvent)
-{
-	oyuncu1.adi = pencere.inputBox1.text;//bilgiler penceresinden bilgiler alınarak ilgili  yare atanıyor
-	oyuncu2.adi = pencere.inputBox2.text;
-	oyuncu3.adi = pencere.inputBox3.text;
-	oyuncu4.adi = pencere.inputBox4.text;
-
-	var colorInfo:ColorTransform= new ColorTransform();;
-	colorInfo.color = uint('0x'+pencere.renkSec1.hexValue);
-	oyuncu1.balon.transform.colorTransform = colorInfo;
-	colorInfo.color = uint('0x'+pencere.renkSec2.hexValue);
-	oyuncu2.balon.transform.colorTransform = colorInfo;
-	colorInfo.color = uint('0x'+pencere.renkSec3.hexValue);
-	oyuncu3.balon.transform.colorTransform = colorInfo;
-	colorInfo.color = uint('0x'+pencere.renkSec4.hexValue);
-	oyuncu4.balon.transform.colorTransform = colorInfo;
-
-	removeChild(pencere);
-	baslaButon.visible = false;
-	sonucTextBox.restrict = "^a-zA-Z";//sonuç olarak sadece sayı  ve işaretler yazılması  için 
-	var islm:sor = new sor(seviyeBelirle.value);
+	var islm:sor = new sor(seviye);
 	islm.soruUret();
 	soru.text = islm.soru;
-	trace(islm.cevap);
+	stage.focus = sonucTextBox;
 	//------------------------
 	var aktifOyuncuNumarasi:int = 1;
 	/**
@@ -176,20 +166,91 @@ function basla(e:MouseEvent)
 	 */
 	function balonPatladimi(no:int)
 	{
-		var i:int = 0;
-		trace("fonksiyon çalıştı aktif no="+no);
 		while (aktifOyuncu(no).patladi)
 		{
+			if (!(patlayanlar.lastIndexOf(no)>-1))
+			{
+				patlayanlar.push(no);
+			}
 			aktifOyuncuNumarasi++;
 			if ((aktifOyuncuNumarasi > oyuncuSayisi))
 			{
 				aktifOyuncuNumarasi = 1;
 			}
 			no = aktifOyuncuNumarasi;
-			i++;
-			if (i==(oyuncuSayisi-1))
+			if (patlayanlar.length == (oyuncuSayisi - 1))
 			{
-				trace("oyun bitti"+"\n oyuncu1 ="+oyuncu1.puan+"\n oyuncu2 ="+oyuncu2.puan);
+				//oyun biti
+				clearInterval(z);
+				clearInterval(patlamaDenetleZ);
+				removeChild(isaretci);
+				switch (oyuncuSayisi)
+				{
+					case 2 :
+						removeChild(oyuncu1.balon);
+						removeChild(oyuncu2.balon);
+						break;
+					case 3 :
+						removeChild(oyuncu1.balon);
+						removeChild(oyuncu2.balon);
+						removeChild(oyuncu3.balon);
+						break;
+					case 4 :
+						removeChild(oyuncu1.balon);
+						removeChild(oyuncu2.balon);
+						removeChild(oyuncu3.balon);
+						removeChild(oyuncu4.balon);
+						break;
+					default :
+						break;
+				}
+				gotoAndStop(4);
+				//yüksek puana göre sırala
+				var sonuclar:Array =new Array();
+				var ksonuclar:Array= new Array();
+				var i:int;
+				for (i=1;i<=oyuncuSayisi;i++){
+					sonuclar.push(aktifOyuncu(i).puan);
+				}
+				for (i=1;i<=oyuncuSayisi;i++){
+					ksonuclar.push(aktifOyuncu(i).puan);
+				}
+				ksonuclar.sort(Array.NUMERIC);
+				ksonuclar.reverse();
+				aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan+=30;//birinciye 30  puan ekle
+				switch (oyuncuSayisi)
+				{
+					case 2 :
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
+						puan3.visible = false;
+						skor3a.visible = false;
+						skor4a.visible = false;
+						puan4.visible = false;
+						break;
+					case 3 :
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
+						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
+						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).puan.toString();
+						skor4a.visible = false;
+						puan4.visible = false;
+						break;
+					case 4 :
+						skor1a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).adi;
+						skor2a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).adi;
+						skor3a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).adi;
+						skor4a.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3])+1).adi;
+						puan1.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan.toString();
+						puan2.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[1])+1).puan.toString();
+						puan3.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[2])+1).puan.toString();
+						puan4.text = aktifOyuncu(sonuclar.indexOf(ksonuclar[3])+1).puan.toString();
+						break;
+				}
 				break;
 			}
 		}
@@ -209,6 +270,7 @@ function basla(e:MouseEvent)
 			islm.soruUret();
 			soru.text = islm.soru;
 			sonucTextBox.text = "";
+			stage.focus = sonucTextBox;
 		}
 	}
 	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm son
@@ -220,7 +282,7 @@ function basla(e:MouseEvent)
 			if (islm.cevap == int(sonucTextBox.text))
 			{
 				clearInterval(z);
-				aktifOyuncu(aktifOyuncuNumarasi).puan +=  10;
+				aktifOyuncu(aktifOyuncuNumarasi).puan +=  15;
 				aktifOyuncuNumarasi++;
 				if ((aktifOyuncuNumarasi > oyuncuSayisi))
 				{
@@ -234,6 +296,7 @@ function basla(e:MouseEvent)
 				islm.soruUret();
 				soru.text = islm.soru;
 				sonucTextBox.text = "";
+				stage.focus = sonucTextBox;
 			}
 			else
 			{
