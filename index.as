@@ -3,8 +3,10 @@ import flash.geom.ColorTransform;
 import flash.geom.Transform;
 import fl.controls.ColorPicker;
 import fl.events.ColorPickerEvent;
-
 import flash.text.TextField;
+import flash.events.FocusEvent;
+import flash.utils.Timer;
+
 // global olması için fonksiyon dışında oyuncuları  tanımlıyorum
 var oyuncuSayisi:int = 0;
 var seviye:int = 0;
@@ -20,6 +22,20 @@ function ileri(e:MouseEvent)
 	seviye = seviyeBelirle.value;
 	oyuncuSayisi = oyuncuSayisiBelirle.value;
 	gotoAndStop(2);
+	/**
+	 * bosmu fonksiyonu 
+	 * input box ın boş  bırakılıp  geçmesini  engelleyen fonksiyon
+	 * @return void
+	 */
+	function bosmu(e:FocusEvent)
+	{
+		if (e.target.text == '' || e.target.text == 'Boş  bırakmayınız')
+		{
+			e.target.text = 'Boş  bırakmayınız';
+			stage.focus = (e.target as TextField);
+		}
+	}
+	stage.focus = inputBox1;
 	switch (oyuncuSayisi)
 	{
 		case 2 :
@@ -33,6 +49,8 @@ function ileri(e:MouseEvent)
 			renkSec4.visible = false;
 			isimLabel4.visible = false;
 			inputBox4.visible = false;
+			inputBox1.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox2.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
 			break;
 		case 3 :
 			label4.visible = false;
@@ -40,20 +58,27 @@ function ileri(e:MouseEvent)
 			renkSec4.visible = false;
 			isimLabel4.visible = false;
 			inputBox4.visible = false;
+			inputBox1.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox2.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox3.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			break;
+		case 4 :
+			inputBox1.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox2.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox3.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
+			inputBox4.addEventListener(FocusEvent.FOCUS_OUT,bosmu);
 			break;
 		default :
 			break;
 	}
 	baslaButon.addEventListener(MouseEvent.CLICK,basla);
 }
-
 function basla(e:MouseEvent)
 {
 	oyuncu1.adi = inputBox1.text;//bilgiler alınarak ilgili  yare atanıyor
 	oyuncu2.adi = inputBox2.text;
 	oyuncu3.adi = inputBox3.text;
 	oyuncu4.adi = inputBox4.text;
-
 	var colorInfo:ColorTransform= new ColorTransform();;
 	colorInfo.color = uint('0x'+renkSec1.hexValue);
 	oyuncu1.balon.transform.colorTransform = colorInfo;
@@ -69,33 +94,27 @@ function basla(e:MouseEvent)
 	switch (oyuncuSayisi)
 	{
 		case 2 :
-			addChild(oyuncu1.balon);
+			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-
-			addChild(oyuncu2.balon);
+			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
 			break;
 		case 3 :
-			addChild(oyuncu1.balon);
+			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-
-			addChild(oyuncu2.balon);
+			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
-
-			addChild(oyuncu3.balon);
+			//addChild(oyuncu3.balon);
 			oyuncu3.balonEkle(735,372);
 			break;
 		case 4 :
-			addChild(oyuncu1.balon);
+			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-
-			addChild(oyuncu2.balon);
+			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
-
-			addChild(oyuncu3.balon);
+			//addChild(oyuncu3.balon);
 			oyuncu3.balonEkle(735,372);
-
-			addChild(oyuncu4.balon);
+			//addChild(oyuncu4.balon);
 			oyuncu4.balonEkle(735,523.65);
 			break;
 	}
@@ -131,8 +150,7 @@ function basla(e:MouseEvent)
 				return null;
 		}
 	}
-
-	var z = setInterval(oyuncu1.balonSisir,1000);//oyuncu birin balonunu şişir
+	oyuncu1.balonSisir();// birinci balonu şişir 
 	addChild(isaretci);
 	isaretci.x = 615;
 	isaretci.y = 68.70;
@@ -181,8 +199,8 @@ function basla(e:MouseEvent)
 			if (patlayanlar.length == (oyuncuSayisi - 1))
 			{
 				//oyun biti
-				clearInterval(z);
-				clearInterval(patlamaDenetleZ);
+				aktifOyuncu(aktifOyuncuNumarasi).balonDurdur(); //oyun bitince aktif oyuncunun balonunu  durduruyor. (aktif oyuncu no bir arttırmak gerekebilir)
+				patlamaDenetleZ.stop();
 				removeChild(isaretci);
 				switch (oyuncuSayisi)
 				{
@@ -254,17 +272,15 @@ function basla(e:MouseEvent)
 						break;
 				}
 				yenidenOyna.addEventListener(MouseEvent.CLICK,function(){gotoAndStop(1);});
-				function yenidenOynaClick(e:MouseEvent)
-				{
-					
-				}
 				break;
 			}
 		}
 	}
-
 	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm baş
-	var patlamaDenetleZ = setInterval(patlamaDenetleF,500);
+	//var patlamaDenetleZ = setInterval(patlamaDenetleF,500);
+	var patlamaDenetleZ:Timer = new Timer(500); 
+	patlamaDenetleZ.addEventListener(TimerEvent.TIMER,patlamaDenetleF);
+	patlamaDenetleZ.start();
 	function patlamaDenetleF()
 	{
 		var aktif = aktifOyuncuNumarasi;
@@ -274,7 +290,7 @@ function basla(e:MouseEvent)
 		{
 			//isaretçiyi  yerlestir
 			isaretciYerlestir(aktifOyuncuNumarasi);
-			z = setInterval(aktifOyuncu(aktifOyuncuNumarasi).balonSisir,1000);
+			aktifOyuncu(aktifOyuncuNumarasi).balonSisir();
 			islm.soruUret();
 			soru.text = islm.soru;
 			sonucTextBox.text = "";
@@ -289,7 +305,7 @@ function basla(e:MouseEvent)
 		{
 			if (islm.cevap == int(sonucTextBox.text))
 			{
-				clearInterval(z);
+				aktifOyuncu(aktifOyuncuNumarasi).balonDurdur();
 				aktifOyuncu(aktifOyuncuNumarasi).puan +=  15;
 				aktifOyuncuNumarasi++;
 				if ((aktifOyuncuNumarasi > oyuncuSayisi))
@@ -300,7 +316,7 @@ function basla(e:MouseEvent)
 				balonPatladimi(aktifOyuncuNumarasi);
 				//isaretçiyi  yerlestir
 				isaretciYerlestir(aktifOyuncuNumarasi);
-				z = setInterval(aktifOyuncu(aktifOyuncuNumarasi).balonSisir,1000);
+				aktifOyuncu(aktifOyuncuNumarasi).balonSisir();
 				islm.soruUret();
 				soru.text = islm.soru;
 				sonucTextBox.text = "";
