@@ -3,6 +3,8 @@
 	import flash.display.MovieClip;
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
+	import flash.display.Stage;
+
 	/*
 	 * oyuncu Sınıfı
 	 * oyuncu  hakkındaki  bilgileri ve işlemleri  barındıran sınıf 
@@ -19,9 +21,11 @@
 		public var balon:ballon = new ballon  ;
 		public var patladi:Boolean;
 		public var timer:Timer=new Timer(1000);
-		public function oyuncu()
+		private var sahne:Stage;
+		public function oyuncu(s:Stage)
 		{
 			// constructor code
+			this.sahne=s;
 			this.timer.addEventListener(TimerEvent.TIMER,this.sisir);
 		}
 		/**
@@ -33,7 +37,7 @@
 		 */
 		public function balonEkle(balonX:int,balonY:int)
 		{
-			addChild(this.balon);
+			this.sahne.addChild(this.balon);
 			this.balon.x = balonX;
 			this.balon.y = balonY;
 			this.balon.height = 50;
@@ -78,8 +82,16 @@
 		{
 			this.balon.gotoAndPlay(3);
 			this.patladi = true;
-
 		}
+		/**
+		 * balonKaldir
+		 *
+		 *
+		 */
+		 public function balonKaldir()
+		 {
+			 this.sahne.removeChild(this.balon);
+		 }
 	}
 
 }

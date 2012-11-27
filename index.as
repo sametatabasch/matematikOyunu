@@ -6,14 +6,15 @@ import fl.events.ColorPickerEvent;
 import flash.text.TextField;
 import flash.events.FocusEvent;
 import flash.utils.Timer;
+import flash.events.TimerEvent;
 
 // global olması için fonksiyon dışında oyuncuları  tanımlıyorum
 var oyuncuSayisi:int = 0;
 var seviye:int = 0;
-var oyuncu1:oyuncu = new oyuncu  ;
-var oyuncu2:oyuncu = new oyuncu  ;
-var oyuncu3:oyuncu = new oyuncu  ;
-var oyuncu4:oyuncu = new oyuncu  ;
+var oyuncu1:oyuncu = new oyuncu(this.stage)  ;
+var oyuncu2:oyuncu = new oyuncu(this.stage)  ;
+var oyuncu3:oyuncu = new oyuncu(this.stage)  ;
+var oyuncu4:oyuncu = new oyuncu(this.stage)  ;
 var isaretci:pompa = new pompa();//pompa
 var patlayanlar:Array=new Array();;
 ileriButon.addEventListener(MouseEvent.CLICK,ileri);
@@ -73,8 +74,7 @@ function ileri(e:MouseEvent)
 	}
 	baslaButon.addEventListener(MouseEvent.CLICK,basla);
 }
-function basla(e:MouseEvent)
-{
+function basla(e:MouseEvent){
 	oyuncu1.adi = inputBox1.text;//bilgiler alınarak ilgili  yare atanıyor
 	oyuncu2.adi = inputBox2.text;
 	oyuncu3.adi = inputBox3.text;
@@ -89,32 +89,32 @@ function basla(e:MouseEvent)
 	colorInfo.color = uint('0x'+renkSec4.hexValue);
 	oyuncu4.balon.transform.colorTransform = colorInfo;
 	gotoAndStop(3);
+var sayac:int=3;
+	var t:Timer=new Timer(500,4);
+		t.addEventListener(TimerEvent.TIMER,function(){geriSay.text=sayac.toString();sayac--;});
+		t.start();
+		t.addEventListener(TimerEvent.TIMER_COMPLETE,function(){oyunuBaslat();});
+}
+function oyunuBaslat()
+{
+	gotoAndStop(4);
 	sonucTextBox.restrict = "^a-zA-Z";//sonuç olarak sadece sayı  ve işaretler yazılması  için 
 	//balon yerleştirme
 	switch (oyuncuSayisi)
 	{
 		case 2 :
-			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
 			break;
 		case 3 :
-			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
-			//addChild(oyuncu3.balon);
 			oyuncu3.balonEkle(735,372);
 			break;
 		case 4 :
-			//addChild(oyuncu1.balon);
 			oyuncu1.balonEkle(735,68.70);
-			//addChild(oyuncu2.balon);
 			oyuncu2.balonEkle(735,220.35);
-			//addChild(oyuncu3.balon);
 			oyuncu3.balonEkle(735,372);
-			//addChild(oyuncu4.balon);
 			oyuncu4.balonEkle(735,523.65);
 			break;
 	}
@@ -150,7 +150,8 @@ function basla(e:MouseEvent)
 				return null;
 		}
 	}
-	oyuncu1.balonSisir();// birinci balonu şişir 
+	oyuncu1.balonSisir();
+	// birinci balonu şişir ;
 	addChild(isaretci);
 	isaretci.x = 615;
 	isaretci.y = 68.70;
@@ -199,30 +200,30 @@ function basla(e:MouseEvent)
 			if (patlayanlar.length == (oyuncuSayisi - 1))
 			{
 				//oyun biti
-				aktifOyuncu(aktifOyuncuNumarasi).balonDurdur(); //oyun bitince aktif oyuncunun balonunu  durduruyor. (aktif oyuncu no bir arttırmak gerekebilir)
+				aktifOyuncu(aktifOyuncuNumarasi).balonDurdur();
 				patlamaDenetleZ.stop();
 				removeChild(isaretci);
 				switch (oyuncuSayisi)
 				{
 					case 2 :
-						removeChild(oyuncu1.balon);
-						removeChild(oyuncu2.balon);
+						oyuncu1.balonKaldir();
+						oyuncu2.balonKaldir();
 						break;
 					case 3 :
-						removeChild(oyuncu1.balon);
-						removeChild(oyuncu2.balon);
-						removeChild(oyuncu3.balon);
+						oyuncu1.balonKaldir();
+						oyuncu2.balonKaldir();
+						oyuncu3.balonKaldir();
 						break;
 					case 4 :
-						removeChild(oyuncu1.balon);
-						removeChild(oyuncu2.balon);
-						removeChild(oyuncu3.balon);
-						removeChild(oyuncu4.balon);
+						oyuncu1.balonKaldir();
+						oyuncu2.balonKaldir();
+						oyuncu3.balonKaldir();
+						oyuncu4.balonKaldir();
 						break;
 					default :
 						break;
 				}
-				gotoAndStop(4);
+				gotoAndStop(5);
 				//yüksek puana göre sırala
 				var sonuclar:Array =new Array();
 				var ksonuclar:Array= new Array();
@@ -278,7 +279,7 @@ function basla(e:MouseEvent)
 	}
 	// yarım saniyede bir aktif balonun patlayıp patlamadığını denetleyen bölüm baş
 	//var patlamaDenetleZ = setInterval(patlamaDenetleF,500);
-	var patlamaDenetleZ:Timer = new Timer(500); 
+	var patlamaDenetleZ:Timer = new Timer(500);
 	patlamaDenetleZ.addEventListener(TimerEvent.TIMER,patlamaDenetleF);
 	patlamaDenetleZ.start();
 	function patlamaDenetleF()

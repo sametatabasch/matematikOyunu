@@ -135,7 +135,7 @@
 					this.cevap = r1 / r2;
 					break;
 			}
-			this.soru = r1 + ' ' + this.islem + ' ' + r2;
+			this.soru = r1 + ' ' + this.islem + ' ' + r2 + ' = ';
 		}
 
 
