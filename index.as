@@ -16,7 +16,9 @@ var oyuncu2:oyuncu = new oyuncu(this.stage)  ;
 var oyuncu3:oyuncu = new oyuncu(this.stage)  ;
 var oyuncu4:oyuncu = new oyuncu(this.stage)  ;
 var isaretci:pompa = new pompa();//pompa
-var patlayanlar:Array=new Array();;
+var patlayanlar:Array=new Array();
+var aktifOyuncuNumarasi:int = 1;
+var islm:sor = new sor(seviye);
 ileriButon.addEventListener(MouseEvent.CLICK,ileri);
 function ileri(e:MouseEvent)
 {
@@ -119,12 +121,11 @@ function oyunuBaslat()
 			break;
 	}
 	//balon yerleştirme son 
-	var islm:sor = new sor(seviye);
 	islm.soruUret();
 	soru.text = islm.soru;
+	aktifIsim.text=aktifOyuncu(aktifOyuncuNumarasi).adi;
 	stage.focus = sonucTextBox;
 	//------------------------
-	var aktifOyuncuNumarasi:int = 1;
 	/**
 	 * aktif oyuncu  değişkenini dönen fonksiyon
 	 * @param no :int aktif oyuncu  numarası 
@@ -293,6 +294,7 @@ function oyunuBaslat()
 			isaretciYerlestir(aktifOyuncuNumarasi);
 			aktifOyuncu(aktifOyuncuNumarasi).balonSisir();
 			islm.soruUret();
+			aktifIsim.text=aktifOyuncu(aktifOyuncuNumarasi).adi;
 			soru.text = islm.soru;
 			sonucTextBox.text = "";
 			stage.focus = sonucTextBox;
@@ -319,6 +321,7 @@ function oyunuBaslat()
 				isaretciYerlestir(aktifOyuncuNumarasi);
 				aktifOyuncu(aktifOyuncuNumarasi).balonSisir();
 				islm.soruUret();
+				aktifIsim.text=aktifOyuncu(aktifOyuncuNumarasi).adi;
 				soru.text = islm.soru;
 				sonucTextBox.text = "";
 				stage.focus = sonucTextBox;
