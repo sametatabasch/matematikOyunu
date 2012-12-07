@@ -137,8 +137,6 @@
 			}
 			this.soru = r1 + ' ' + this.islem + ' ' + r2 + ' = ';
 		}
-
-
 	}
 
 }
