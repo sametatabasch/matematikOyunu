@@ -18,7 +18,6 @@ var oyuncu4:oyuncu = new oyuncu(this.stage);
 var isaretci:pompa = new pompa();//pompa
 var patlayanlar:Array=new Array();
 var aktifOyuncuNumarasi:int = 1;
-var islm:sor = new sor(seviye);
 var nesneIsmi:String;//getChildByName de kullanılan Nesne ismi değişkeni
 ileriButon.addEventListener(MouseEvent.CLICK,ileri);
 function ileri(e:MouseEvent)
@@ -80,6 +79,7 @@ function basla(e:MouseEvent)
 		t.addEventListener(TimerEvent.TIMER_COMPLETE,function(){oyunuBaslat();});
 	}
 }
+
 function oyunuBaslat()
 {
 	gotoAndStop(4);
@@ -104,6 +104,7 @@ function oyunuBaslat()
 			break;
 	}
 	//balon yerleştirme son 
+	var islm:sor = new sor(seviye);
 	islm.soruUret();
 	soru.text = islm.soru;
 	aktifIsim.text = aktifOyuncu(aktifOyuncuNumarasi).adi;
@@ -223,7 +224,7 @@ function oyunuBaslat()
 				ksonuclar.sort(Array.NUMERIC);
 				ksonuclar.reverse();
 				aktifOyuncu(sonuclar.indexOf(ksonuclar[0])+1).puan+=30;//birinciye 30  puan ekle
-				for (var i=1; i<=oyuncuSayisi; i++)
+				for (i=1; i<=oyuncuSayisi; i++)
 				{
 					nesneIsmi = 'skor' + String(i) + 'a';
 					var nesne:Object = getChildByName(nesneIsmi);
