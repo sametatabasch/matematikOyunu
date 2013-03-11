@@ -36,9 +36,9 @@
 		}
 		/**
 		 * islemBelirle fonksiyonu 
-		 * seviyeye uygun işlemi dizisini belirleyen fonksiyon
+		 * seviyeye uygun işlemi dizisinden işlem  belirleyen fonksiyon
 		 *
-		 * @return Array
+		 * @return string
 		 */
 		public function islemBelirle()
 		{
@@ -102,7 +102,7 @@
 		 * soruUret fonksiyonu 
 		 * seviyeve uygun işlem üreten fonksiyon
 		 *
-		 *
+		 * @return string
 		 */
 		public function soruUret()
 		{

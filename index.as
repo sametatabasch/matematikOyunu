@@ -237,7 +237,7 @@ function oyunuBaslat()
 					nesneIsmi = 'puan' + String(oyuncuSayisi + i);
 					Object(getChildByName(nesneIsmi)).visible = false;
 				}
-				yenidenOyna.addEventListener(MouseEvent.CLICK,function(){gotoAndStop(1);});
+				yenidenOyna.addEventListener(MouseEvent.CLICK,function(){gotoAndStop(1);perde.gotoAndStop(1);});
 				break;
 			}
 		}
